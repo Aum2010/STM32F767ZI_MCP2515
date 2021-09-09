@@ -34,7 +34,7 @@ uint8_t mcp2515_initialize ( void )
 uint8_t mcp2515_setmode_normalmode ( void )
 {
 	uint8_t count = 10;
-	mcp2515_write(MCP2515_CANSTAT, 0x00) ;
+	mcp2515_write(MCP2515_CANCTRL, 0x00) ;
 
 	do
 	{
@@ -48,10 +48,27 @@ uint8_t mcp2515_setmode_normalmode ( void )
 		return 0;
 }
 
+uint8_t mcp2515_setmode_sleepmode ( void )
+{
+	uint8_t count = 10;
+	mcp2515_write(MCP2515_CANCTRL, 0x20) ;
+
+	do
+	{
+		if( (mcp2515_read(MCP2515_CANSTAT) & 0xe0) == 0x20 )
+		{
+			return 1 ;
+		}
+
+		count--;
+	}while( count > 0 ) ;
+		return 0;
+}
+
 uint8_t mcp2515_setmode_configmode ( void )
 {
 	uint8_t count = 10;
-	mcp2515_write(MCP2515_CANSTAT, 0x80) ;
+	mcp2515_write(MCP2515_CANCTRL, 0x80) ;
 
 	do{
 		if( (mcp2515_read(MCP2515_CANSTAT) & 0xe0 ) == 0x80 ){
@@ -72,10 +89,10 @@ void mcp2515_reset ( void )
 
 void mcp2515_write ( uint8_t address , uint8_t data)
 {
-//	uint8_t inst = 0x02;
+	uint8_t inst = 0x02;
 	SPI_SELECT();
 
-	HAL_SPI_Transmit(SPI_CAN, (uint8_t)(MCP2515_WRITE) , 1, SPI_TIMEOUT);
+	HAL_SPI_Transmit(SPI_CAN, &inst, 1, SPI_TIMEOUT);
 	HAL_SPI_Transmit(SPI_CAN, &address, 1, SPI_TIMEOUT);
 	HAL_SPI_Transmit(SPI_CAN, &data, 1, SPI_TIMEOUT);
 
@@ -128,9 +145,10 @@ uint8_t mcp2515_read_sequence ( uint8_t address , uint8_t length )
 uint8_t mcp2515_read_status( void )
 {
 	uint8_t res ;
+	uint8_t inst = 0xA0;
 
 	SPI_SELECT();
-	HAL_SPI_Transmit(SPI_CAN,(uint8_t)MCP2515_READ_STATUS , 1, SPI_TIMEOUT);
+	HAL_SPI_Transmit(SPI_CAN,&inst , 1, SPI_TIMEOUT);
 	HAL_SPI_Receive(SPI_CAN, &res, 1 , SPI_TIMEOUT);
 	SPI_UNSELECT();
 

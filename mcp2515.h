@@ -96,6 +96,130 @@
 #define MSG_IN_BOTH_BUFFERS     0x03
 
 
+
+typedef union{
+  struct{
+    unsigned RX0IF      : 1;
+    unsigned RX1IF      : 1;
+    unsigned TXB0REQ    : 1;
+    unsigned TX0IF      : 1;
+    unsigned TXB1REQ    : 1;
+    unsigned TX1IF      : 1;
+    unsigned TXB2REQ    : 1;
+    unsigned TX2IF      : 1;
+  };
+  uint8_t ctrl_status;
+}ctrl_status_t;
+
+typedef union{
+  struct{
+    unsigned filter     : 3;
+    unsigned msgType    : 2;
+    unsigned unusedBit  : 1;
+    unsigned rxBuffer   : 2;
+  };
+  uint8_t ctrl_rx_status;
+}ctrl_rx_status_t;
+
+typedef union{
+  struct{
+    unsigned EWARN      :1;
+    unsigned RXWAR      :1;
+    unsigned TXWAR      :1;
+    unsigned RXEP       :1;
+    unsigned TXEP       :1;
+    unsigned TXBO       :1;
+    unsigned RX0OVR     :1;
+    unsigned RX1OVR     :1;
+  };
+  uint8_t error_flag_reg;
+}ctrl_error_status_t;
+
+typedef union{
+  struct{
+    uint8_t RXBnSIDH;
+    uint8_t RXBnSIDL;
+    uint8_t RXBnEID8;
+    uint8_t RXBnEID0;
+    uint8_t RXBnDLC;
+    uint8_t RXBnD0;
+    uint8_t RXBnD1;
+    uint8_t RXBnD2;
+    uint8_t RXBnD3;
+    uint8_t RXBnD4;
+    uint8_t RXBnD5;
+    uint8_t RXBnD6;
+    uint8_t RXBnD7;
+  };
+  uint8_t rx_reg_array[13];
+}rx_reg_t;
+
+/* MCP2515 Registers */
+typedef struct{
+  uint8_t RXF0SIDH;
+  uint8_t RXF0SIDL;
+  uint8_t RXF0EID8;
+  uint8_t RXF0EID0;
+}RXF0;
+
+typedef struct{
+  uint8_t RXF1SIDH;
+  uint8_t RXF1SIDL;
+  uint8_t RXF1EID8;
+  uint8_t RXF1EID0;
+}RXF1;
+
+typedef struct{
+  uint8_t RXF2SIDH;
+  uint8_t RXF2SIDL;
+  uint8_t RXF2EID8;
+  uint8_t RXF2EID0;
+}RXF2;
+
+typedef struct{
+  uint8_t RXF3SIDH;
+  uint8_t RXF3SIDL;
+  uint8_t RXF3EID8;
+  uint8_t RXF3EID0;
+}RXF3;
+
+typedef struct{
+  uint8_t RXF4SIDH;
+  uint8_t RXF4SIDL;
+  uint8_t RXF4EID8;
+  uint8_t RXF4EID0;
+}RXF4;
+
+typedef struct{
+  uint8_t RXF5SIDH;
+  uint8_t RXF5SIDL;
+  uint8_t RXF5EID8;
+  uint8_t RXF5EID0;
+}RXF5;
+
+typedef struct{
+  uint8_t RXM0SIDH;
+  uint8_t RXM0SIDL;
+  uint8_t RXM0EID8;
+  uint8_t RXM0EID0;
+}RXM0;
+
+typedef struct{
+  uint8_t RXM1SIDH;
+  uint8_t RXM1SIDL;
+  uint8_t RXM1EID8;
+  uint8_t RXM1EID0;
+}RXM1;
+
+typedef struct{
+  uint8_t tempSIDH;
+  uint8_t tempSIDL;
+  uint8_t tempEID8;
+  uint8_t tempEID0;
+}id_reg_t;
+
+
+
 uint8_t mcp2515_initialize ( void );
 uint8_t mcp2515_setmode_normalmode ( void );
 uint8_t mcp2515_setmode_configmode ( void );
