@@ -100,13 +100,13 @@ void mcp2515_write ( uint8_t address , uint8_t data)
 
 }
 
-void mcp2515_write_sequence ( uint8_t address , uint8_t data , uint8_t length)
+void mcp2515_write_sequence ( uint8_t start_address , uint8_t to_address  , uint8_t * data)
 {
 	  SPI_SELECT();
 
 	  HAL_SPI_Transmit(SPI_CAN, (uint8_t)MCP2515_WRITE , 1, SPI_TIMEOUT);
-	  HAL_SPI_Transmit(SPI_CAN, &address, 1, SPI_TIMEOUT);
-	  HAL_SPI_Transmit(SPI_CAN, &data, 1, SPI_TIMEOUT);
+	  HAL_SPI_Transmit(SPI_CAN, &start_address, 1, SPI_TIMEOUT);
+	  HAL_SPI_Transmit(SPI_CAN, data, ( (to_address - start_address) + 1 ), SPI_TIMEOUT);
 
 	  SPI_UNSELECT();
 

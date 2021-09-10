@@ -227,7 +227,7 @@ void mcp2515_reset ( void );
 
 
 void mcp2515_write ( uint8_t address , uint8_t data);
-void mcp2515_write_sequence ( uint8_t address , uint8_t data , uint8_t length);
+void mcp2515_write_sequence ( uint8_t start_address , uint8_t to_address  , uint8_t * data);
 uint8_t mcp2515_read ( uint8_t address );
 uint8_t mcp2515_read_sequence ( uint8_t address , uint8_t length );
 uint8_t mcp2515_read_status( void );
