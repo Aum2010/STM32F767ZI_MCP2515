@@ -223,6 +223,7 @@ typedef struct{
 uint8_t mcp2515_initialize ( void );
 uint8_t mcp2515_setmode_normalmode ( void );
 uint8_t mcp2515_setmode_configmode ( void );
+uint8_t mcp2515_setmode_sleepmode ( void );
 void mcp2515_reset ( void );
 
 
@@ -230,6 +231,7 @@ void mcp2515_write ( uint8_t address , uint8_t data);
 void mcp2515_write_sequence ( uint8_t start_address , uint8_t to_address  , uint8_t * data);
 uint8_t mcp2515_read ( uint8_t address );
 uint8_t mcp2515_read_sequence ( uint8_t address , uint8_t length );
+uint8_t mcp2515_readRxbuff ( uint8_t instruction, uint8_t *data, uint8_t length );
 uint8_t mcp2515_read_status( void );
 uint8_t mcp2515_getRx_status ( void );
 void mcp2515_bit_modify( uint8_t address , uint8_t mask ,uint8_t data );

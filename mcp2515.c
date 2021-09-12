@@ -142,6 +142,19 @@ uint8_t mcp2515_read_sequence ( uint8_t address , uint8_t length )
 	  return res ;
 }
 
+uint8_t mcp2515_readRxbuff ( uint8_t instruction, uint8_t *data, uint8_t length )
+{
+	  uint8_t res ;
+
+	  SPI_SELECT();
+	  HAL_SPI_Transmit(SPI_CAN,&instruction, 1, SPI_TIMEOUT);
+	  HAL_SPI_Receive(SPI_CAN, &res, length , SPI_TIMEOUT);
+
+	  SPI_UNSELECT();
+
+	  return res ;
+}
+
 uint8_t mcp2515_read_status( void )
 {
 	uint8_t res ;
